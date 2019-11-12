@@ -60,7 +60,7 @@ public class ClienteService {
 	public void delete(Integer id) {
 		find(id);
 		try {
-		clienteRepository.deleteById(id);
+			clienteRepository.deleteById(id);
 		} catch (DataIntegrityViolationException ex) {
 			throw new DataIntegrityException("Impossivel excluir cliente com pedidos", ex);
 		}
