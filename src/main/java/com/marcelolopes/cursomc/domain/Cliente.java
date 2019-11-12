@@ -50,7 +50,7 @@ public class Cliente implements Serializable{
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo.getCod();
+		this.tipo = (tipo == null) ? null : tipo.getCod();
 	}
 	
 	public Set<String> getTelefones() {
@@ -89,7 +89,7 @@ public class Cliente implements Serializable{
 		return TipoCliente.toEnum(tipo);
 	}
 	public void setTipo(TipoCliente tipo) {
-		this.tipo = tipo.getCod();
+		this.tipo = (tipo == null) ? null : tipo.getCod();
 	}
 
 	public List<Endereco> getEnderecos() {
