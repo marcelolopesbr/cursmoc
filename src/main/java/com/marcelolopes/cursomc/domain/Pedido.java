@@ -67,6 +67,14 @@ public class Pedido implements Serializable {
 	public void setInstant(Date instant) {
 		this.instant = instant;
 	}
+	
+	public Double getValorTotal() {
+		Double valorTotal = 0.0;
+		for(ItemPedido item : itens) {
+			valorTotal += item.getSubTotal();
+		}
+		return valorTotal;
+	}
 
 	public Endereco getEnderecoDeEntrega() {
 		return enderecoDeEntrega;
