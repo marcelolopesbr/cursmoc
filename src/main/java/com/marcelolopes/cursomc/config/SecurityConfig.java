@@ -18,9 +18,15 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.marcelolopes.cursomc.security.JWTUtil;
+import com.marcelolopes.cursomc.security.JWtAuthenticationFilter;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+	JWTUtil jwtUtil;
 	
 	@Autowired
 	Environment env;
@@ -50,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers(PUBLIC_MATCHERS).permitAll()
 			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()			
 			.anyRequest().authenticated();
+		http.addFilter(new JWtAuthenticationFilter(jwtUtil, authenticationManager()));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	

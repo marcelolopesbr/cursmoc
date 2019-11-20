@@ -131,7 +131,7 @@ public class DBService {
 		
 		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
 		
-		Cliente cli2 = new Cliente(null, "Imperatriz Furiosa", "marcelo.almeida@serpro.gov.br", "49412256000", TipoCliente.PESSOAFISICA, pe.encode("batata"));
+		Cliente cli2 = new Cliente(null, "Imperatriz Furiosa", "andre.sales@serpro.gov.br", "49412256000", TipoCliente.PESSOAFISICA, pe.encode("andre"));
 		cli2.addPerfil(Perfil.ADMIN);
 		
 		Endereco end3 = new Endereco(null, "Rua Longe pra Caraca", "100", "Ap 01", "Ibirité", "3484787", cli2, c1);
