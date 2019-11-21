@@ -16,12 +16,15 @@ import org.springframework.stereotype.Service;
 import com.marcelolopes.cursomc.domain.Cidade;
 import com.marcelolopes.cursomc.domain.Cliente;
 import com.marcelolopes.cursomc.domain.Endereco;
+import com.marcelolopes.cursomc.domain.enums.Perfil;
 import com.marcelolopes.cursomc.domain.enums.TipoCliente;
 import com.marcelolopes.cursomc.dto.ClienteDTO;
 import com.marcelolopes.cursomc.dto.ClienteNewDTO;
 import com.marcelolopes.cursomc.repositories.CidadeRepository;
 import com.marcelolopes.cursomc.repositories.ClienteRepository;
 import com.marcelolopes.cursomc.repositories.EnderecoRepository;
+import com.marcelolopes.cursomc.security.UserSS;
+import com.marcelolopes.cursomc.services.exceptions.AuthorizationException;
 import com.marcelolopes.cursomc.services.exceptions.DataIntegrityException;
 import com.marcelolopes.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -41,6 +44,13 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepository;
 	
 	public Cliente find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		if (null == user || !user.getRole(Perfil.ADMIN) && id != user.getId()) {
+			System.out.println("Usuario admin? " + user.getRole(Perfil.ADMIN));
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Cliente> obj = clienteRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id : " + id + "Tipo : " + Cliente.class.getName()));
